@@ -50,20 +50,12 @@
   ::-webkit-scrollbar-thumb{ background:var(--line-strong); border-radius:100px; border:2px solid var(--paper); background-clip:padding-box; }
 
   /* ---------------- custom cursor ---------------- */
-  .cursor{ position:fixed; top:0; left:0; width:8px; height:8px; border-radius:50%; background:var(--ink); pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
-  .cursor-ring{
-    position:fixed; top:0; left:0; width:44px; height:44px; border-radius:50%; border:1.5px solid var(--ink);
-    pointer-events:none; z-index:9998; transform:translate(-50%,-50%) scale(1); transition:width .25s,height .25s,background .25s,border-color .25s;
-    display:flex; align-items:center; justify-content:center;
+  .cursor{
+    position:fixed; top:0; left:0; width:14px; height:14px; border-radius:50%;
+    background:#fff; mix-blend-mode:difference; pointer-events:none; z-index:9999;
+    transform:translate(-50%,-50%); transition:width .15s ease, height .15s ease;
   }
-  .cursor-ring span{ font-family:var(--font-mono); font-size:10px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; opacity:0; transition:opacity .2s; color:var(--ink); white-space:nowrap; }
-  .cursor-ring.big{ width:88px; height:88px; background:var(--yellow); border-color:var(--yellow); }
-  .cursor-ring.big span{ opacity:1; }
-  .cursor-ring.dark{ border-color:var(--cream); }
-  .cursor-ring.dark.big{ background:var(--violet); border-color:var(--violet); }
-  .cursor-ring.dark.big span{ color:var(--cream); }
-  .cursor-ring.drag{ background:var(--coral); border-color:var(--coral); width:64px; height:64px; }
-  .cursor-ring.drag span{ opacity:1; color:var(--cream); }
+  .cursor.big{ width:22px; height:22px; }
 
   /* ---------------- top bar ---------------- */
   .topbar{ position:fixed; top:0; left:0; right:0; z-index:400; display:flex; justify-content:space-between; align-items:center; padding:20px clamp(20px,4vw,40px); mix-blend-mode:difference; }
@@ -251,9 +243,22 @@
   .cr-arrow{ font-size:22px; color:#8a8a9c; transition:transform .3s cubic-bezier(.34,1.56,.64,1); }
   a.contact-row:hover .cr-arrow{ color:var(--yellow); transform:translate(6px,-6px) rotate(20deg); }
 
-  footer{ background:var(--ink); color:#7a7a8c; padding:30px clamp(20px,5vw,48px) 40px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; font-family:var(--font-mono); font-size:11px; border-top:1px solid var(--line-dark); }
-  footer a{ color:#7a7a8c; transition:color .2s; }
-  footer a:hover{ color:var(--yellow); }
+  /* ---------------- FOOTER ---------------- */
+  footer{ background:var(--ink); color:#c9c9d6; padding:70px clamp(20px,5vw,48px) 0; border-top:1px solid var(--line-dark); }
+  .footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:40px; padding-bottom:50px; }
+  @media (max-width:760px){ .footer-grid{ grid-template-columns:1fr; gap:34px; } }
+  .footer-logo{ font-family:var(--font-display); font-weight:700; font-size:22px; color:var(--cream); }
+  .footer-tagline{ margin-top:14px; font-size:13.5px; line-height:1.7; max-width:280px; color:#9c9cae; }
+  .footer-socials{ display:flex; gap:10px; margin-top:22px; flex-wrap:wrap; }
+  .footer-socials a{ font-family:var(--font-mono); font-size:11px; font-weight:600; border:1.5px solid var(--line-dark-strong); border-radius:100px; padding:9px 16px; transition:background .2s ease, color .2s ease, border-color .2s ease; }
+  .footer-socials a:hover{ background:var(--yellow); color:var(--ink); border-color:var(--yellow); }
+  .footer-col-title{ font-family:var(--font-mono); font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--mint); font-weight:700; margin-bottom:16px; }
+  .footer-col{ display:flex; flex-direction:column; gap:11px; }
+  .footer-col a, .footer-col span{ font-size:13.5px; color:#c9c9d6; transition:color .2s ease; }
+  .footer-col a:hover{ color:var(--yellow); }
+  .footer-bottom{ display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; padding:24px 0; border-top:1px solid var(--line-dark); font-family:var(--font-mono); font-size:11px; color:#7a7a8c; }
+  .back-to-top{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:11px; font-weight:600; color:var(--cream); border:1.5px solid var(--line-dark-strong); border-radius:100px; padding:9px 16px; cursor:pointer; transition:background .2s ease, color .2s ease, border-color .2s ease; }
+  .back-to-top:hover{ background:var(--violet); border-color:var(--violet); color:var(--cream); }
 
   .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
   .reveal.in{ opacity:1; transform:translateY(0); }
@@ -266,7 +271,6 @@
 <body>
 
 <div class="cursor" id="cursorDot"></div>
-<div class="cursor-ring" id="cursorRing"><span id="cursorLabel"></span></div>
 
 <div class="topbar">
   <div class="logo">AK/</div>
@@ -315,7 +319,7 @@
     <p class="hero-sub">I'm <b>Arjun Kiran</b> — a 9th grader at BASIS Phoenix who ships full-stack apps, breaks into systems (ethically), and leads teams on the side. Currently interning at <b>SkipCourse LLC</b>.</p>
     <div class="hero-cta-row">
       <a href="#work" class="btn btn-solid hoverable" data-label="Scroll">SEE THE WORK ↓</a>
-      <a href="https://www.linkedin.com/in/arjun-kiran" class="btn btn-outline hoverable" data-label="Email">LINKEDIN</a>
+      <a href="https://www.linkedin.com/in/arjun-kiran" class="btn btn-outline hoverable" data-label="LinkedIn">LINKEDIN</a>
     </div>
   </div>
 
@@ -631,30 +635,46 @@
 </section>
 
 <footer>
-  <div>Arjun Kiran · built by hand with HTML, CSS &amp; JS.</div>
-  <div style="display:flex; gap:18px; flex-wrap:wrap;">
-    <a href="#work">Work</a><a href="#experience">Experience</a><a href="#homies">Homies</a><a href="#contact">Contact</a>
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">AK/</div>
+      <p class="footer-tagline">Building clean, functional software one project at a time — currently open to summer 2027 internships.</p>
+      <div class="footer-socials">
+        <a class="hoverable" data-label="Open" href="https://github.com/arjuns-coding" target="_blank" rel="noopener">GitHub</a>
+        <a class="hoverable" data-label="LinkedIn" href="https://linkedin.com/in/arjun-kiran" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="hoverable" data-label="Email" href="mailto:arjunkiran4375@gmail.com">Email</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Sitemap</div>
+      <a class="hoverable" data-label="Go" href="#work">Work</a>
+      <a class="hoverable" data-label="Go" href="#experience">Experience</a>
+      <a class="hoverable" data-label="Go" href="#toolkit">Toolkit</a>
+      <a class="hoverable" data-label="Go" href="#education">Education</a>
+      <a class="hoverable" data-label="Go" href="#homies">Homies</a>
+      <a class="hoverable" data-label="Go" href="#contact">Contact</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Get in touch</div>
+      <a class="hoverable" data-label="Email" href="mailto:arjunkiran4375@gmail.com">arjunkiran4375@gmail.com</a>
+      <span>Discord: hi.im.arjun</span>
+      <span>Phoenix, AZ</span>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© <span id="footYear"></span> Arjun Kiran. Built by hand with HTML, CSS &amp; JS.</span>
+    <button class="back-to-top hoverable" id="backToTop" data-label="Top">BACK TO TOP ↑</button>
   </div>
 </footer>
 
 <script>
   /* ---------------- custom cursor ---------------- */
   const dot = document.getElementById('cursorDot');
-  const ring = document.getElementById('cursorRing');
-  const label = document.getElementById('cursorLabel');
-  let mx=0,my=0, rx=0, ry=0;
-  window.addEventListener('mousemove', (e) => { mx=e.clientX; my=e.clientY; dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`; });
-  (function loop(){ rx += (mx-rx)*0.18; ry += (my-ry)*0.18; ring.style.left='0px'; ring.style.top='0px'; ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`; requestAnimationFrame(loop); })();
-
-  const darkZones = ['heroSection','contact'].map(id => document.getElementById(id));
-  function isOverDark(x,y){
-    return darkZones.some(z => { if(!z) return false; const r = z.getBoundingClientRect(); return x>=r.left && x<=r.right && y>=r.top && y<=r.bottom; });
-  }
-  window.addEventListener('mousemove', (e) => { ring.classList.toggle('dark', isOverDark(e.clientX, e.clientY)); });
+  window.addEventListener('mousemove', (e) => { dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%,-50%)`; });
 
   document.querySelectorAll('.hoverable').forEach(el => {
-    el.addEventListener('mouseenter', () => { label.textContent = el.getAttribute('data-label') || 'View'; ring.classList.add('big'); });
-    el.addEventListener('mouseleave', () => { ring.classList.remove('big'); });
+    el.addEventListener('mouseenter', () => dot.classList.add('big'));
+    el.addEventListener('mouseleave', () => dot.classList.remove('big'));
   });
 
   /* ---------------- mobile menu ---------------- */
@@ -686,7 +706,7 @@
       origX = rect.left - fieldRect.left; origY = rect.top - fieldRect.top;
       st.style.left = origX+'px'; st.style.top = origY+'px'; st.style.right='auto'; st.style.bottom='auto';
       document.body.style.userSelect='none';
-      ring.classList.add('drag'); label.textContent='';
+      dot.classList.add('big');
     }
     function move(e){
       if(!dragging) return;
@@ -694,7 +714,7 @@
       const dx = p.x - startX, dy = p.y - startY;
       st.style.left = (origX+dx)+'px'; st.style.top = (origY+dy)+'px';
     }
-    function up(){ if(!dragging) return; dragging=false; st.classList.remove('dragging'); document.body.style.userSelect=''; ring.classList.remove('drag'); }
+    function up(){ if(!dragging) return; dragging=false; st.classList.remove('dragging'); document.body.style.userSelect=''; dot.classList.remove('big'); }
     st.addEventListener('pointerdown', down);
     window.addEventListener('pointermove', move);
     window.addEventListener('pointerup', up);
@@ -749,6 +769,12 @@
       else { homiePanelLink.textContent = 'Portfolio coming soon'; homiePanelLink.removeAttribute('href'); }
       homiePanel.classList.add('visible');
     });
+  });
+
+  /* ---------------- footer: year + back to top ---------------- */
+  document.getElementById('footYear').textContent = new Date().getFullYear();
+  document.getElementById('backToTop').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   /* ---------------- lang bars + reveal on scroll ---------------- */
