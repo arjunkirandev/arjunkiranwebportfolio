@@ -55,17 +55,15 @@ ul{ list-style:none; }
 .nav-pill{ display:flex; align-items:center; gap:2px; background:rgba(255,255,255,0.82); backdrop-filter:blur(16px); border:1px solid var(--line); border-radius:100px; padding:7px 7px 7px 18px; box-shadow:0 10px 30px -16px rgba(0,0,0,.18); max-width:calc(100vw - 32px); }
 .nav-logo{ font-family:var(--font-display); font-weight:800; font-size:16px; margin-right:16px; white-space:nowrap; cursor:pointer; }
 .nav-links{ display:flex; gap:1px; position:relative; }
-.nav-links > a, .nav-links > .nav-more > button{ font-size:13px; padding:9px 13px; border-radius:100px; color:var(--ink-soft); transition:background .2s ease, color .2s ease; white-space:nowrap; }
-.nav-links > a:hover, .nav-more > button:hover{ background:var(--bg-soft); color:var(--ink); }
+.nav-links > a{ font-size:13px; padding:9px 13px; border-radius:100px; color:var(--ink-soft); transition:background .2s ease, color .2s ease, transform .28s cubic-bezier(.34,1.56,.64,1); white-space:nowrap; }
+.nav-links > a:hover{ background:var(--bg-soft); color:var(--ink); transform:translateY(-2px) rotate(-1deg); }
 .nav-links > a.is-active{ background:var(--ink); color:#fff; }
-.nav-more{ position:relative; }
-.nav-more-menu{ position:absolute; top:calc(100% + 10px); left:50%; transform:translateX(-50%) translateY(6px); background:#fff; border:1px solid var(--line); border-radius:14px; padding:6px; min-width:150px; box-shadow:0 20px 40px -20px rgba(0,0,0,.25); opacity:0; pointer-events:none; transition:opacity .18s ease, transform .18s ease; }
-.nav-more-menu.open{ opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0); }
-.nav-more-menu a{ display:block; font-size:13px; padding:9px 12px; border-radius:8px; color:var(--ink-soft); }
-.nav-more-menu a:hover{ background:var(--bg-soft); color:var(--ink); }
 .nav-cta{ font-size:13px; font-weight:600; background:var(--ink); color:#fff; padding:10px 18px; border-radius:100px; margin-left:6px; transition:background .2s ease, transform .2s ease; white-space:nowrap; }
 .nav-cta:hover{ background:var(--accent-deep); transform:translateY(-1px); }
-@media (max-width:900px){ .nav-links{ display:none; } }
+.nav-resume{ font-size:13px; font-weight:600; color:var(--accent-deep); background:var(--accent-soft); padding:10px 16px; border-radius:100px; margin-left:6px; white-space:nowrap; display:inline-flex; align-items:center; gap:6px; transition:background .2s ease, transform .28s cubic-bezier(.34,1.56,.64,1); position:relative; }
+.nav-resume:hover{ background:#dfe2fd; transform:translateY(-2px) rotate(1deg) scale(1.03); }
+.nav-resume .resume-badge{ font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; background:var(--accent); color:#fff; padding:2px 6px; border-radius:100px; }
+@media (max-width:1050px){ .nav-links{ display:none; } }
 
 /* ---------- PAGE SYSTEM ---------- */
 .page{ display:none; }
@@ -297,6 +295,9 @@ ul{ list-style:none; }
 .contact-btn.solid:hover{ transform:translateY(-2px); background:var(--accent-deep); }
 .contact-btn.outline{ border:1.5px solid var(--line); color:var(--ink); }
 .contact-btn.outline:hover{ background:var(--bg-soft); }
+.contact-btn.resume{ background:var(--accent-soft); color:var(--accent-deep); position:relative; }
+.contact-btn.resume:hover{ background:#dfe2fd; }
+.contact-btn.resume .resume-badge{ font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; background:var(--accent); color:#fff; padding:2px 6px; border-radius:100px; margin-left:6px; }
 .contact-links{ margin-top:48px; display:flex; gap:24px; justify-content:center; flex-wrap:wrap; font-size:13px; color:var(--ink-soft); }
 .contact-links a:hover{ color:var(--ink); }
 
@@ -367,6 +368,23 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
 .mem-card:hover:not(.matched):not(.flipped){ transform:translateY(-3px) rotate(-2deg); }
 .work-row{ transition:transform .3s cubic-bezier(.34,1.56,.64,1); }
 .work-row:active{ transform:scale(.995); }
+
+/* ---------- CUTE MAGNETIC / SQUISH HOVER SYSTEM (jerrychendesigns-style) ---------- */
+.magnetic{ display:inline-block; will-change:transform; transition:transform .35s cubic-bezier(.34,1.56,.64,1); }
+.hover-pop{ transition:transform .3s cubic-bezier(.34,1.7,.64,1), box-shadow .3s ease; }
+.hover-pop:hover{ transform:translateY(-4px) scale(1.035); }
+.hover-pop:active{ transform:translateY(-1px) scale(.97); }
+
+.tl-head, .crew-card, .edu-card, .trio-card, .tool-card, .game-tab, .work-row, .mem-card, .to-top-btn, .cookie-fab, .nav-links > a, .nav-cta, .nav-resume, .coin-btn, .contact-btn, .proj-link-btn, .work-tags span, .proj-tags span{
+  transform-origin:center;
+}
+.crew-card:hover, .edu-card:hover, .trio-card:hover{ transform:translateY(-5px) rotate(-.8deg) scale(1.015); }
+
+@keyframes cuteBounceIn{ 0%{ transform:scale(.8) rotate(-4deg); opacity:.4; } 60%{ transform:scale(1.06) rotate(2deg); opacity:1; } 100%{ transform:scale(1) rotate(0); } }
+.mem-card.matched{ animation:cuteBounceIn .4s cubic-bezier(.34,1.56,.64,1); }
+
+.sparkle-trail{ position:fixed; pointer-events:none; z-index:9998; font-size:14px; animation:sparkleFade .7s ease-out forwards; }
+@keyframes sparkleFade{ 0%{ opacity:1; transform:translate(0,0) scale(1) rotate(0deg); } 100%{ opacity:0; transform:translate(var(--sx,0),var(--sy,-24px)) scale(.4) rotate(90deg); } }
 
 .float-deco{ position:absolute; font-size:26px; pointer-events:none; animation:floaty 5s ease-in-out infinite; user-select:none; }
 @keyframes floaty{ 0%,100%{ transform:translateY(0) rotate(-4deg); } 50%{ transform:translateY(-16px) rotate(6deg); } }
@@ -448,15 +466,11 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
       <a href="#toolkit" data-nav="toolkit">Toolkit</a>
       <a href="#experience" data-nav="experience">Experience</a>
       <a href="#playground" data-nav="playground">Playground</a>
-      <div class="nav-more">
-        <button type="button" id="moreBtn">More</button>
-        <div class="nav-more-menu" id="moreMenu">
-          <a href="#education" data-nav="education">Education</a>
-          <a href="#beyond" data-nav="beyond">Beyond code</a>
-          <a href="#crew" data-nav="crew">Crew</a>
-        </div>
-      </div>
+      <a href="#education" data-nav="education">Education</a>
+      <a href="#beyond" data-nav="beyond">Beyond code</a>
+      <a href="#crew" data-nav="crew">Crew</a>
     </div>
+    <a class="nav-resume" href="#" id="navResumeLink" target="_blank" rel="noopener">Resume <span class="resume-badge">Temp</span></a>
     <a class="nav-cta" href="#contact" data-nav="contact">Get in touch</a>
   </div>
 </nav>
@@ -468,8 +482,8 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
   <section class="hero">
     <div class="wrap reveal-doodle in">
       <div class="hero-badge"><span class="dot"></span>Open to summer 2027 internships</div>
-      <p class="hero-greeting">Hi, I'm Arjun — I build <em>full-stack apps</em>, study <em>ethical hacking</em>, and lead teams on the side.</p>
-      <p class="hero-sub">I like building things that are actually useful to the people around me — a heat-relief finder for Phoenix summers, a focus timer, a graphing calculator built from scratch. This site is a running log of that work, plus a few detours into games and hobbies.</p>
+      <p class="hero-greeting">Hi, I'm Arjun Kiran, I build <em>full-stack apps</em>, study <em>ethical hacking</em>, and lead teams on the side.</p>
+      <p class="hero-sub">I like building things that are actually useful to the people around me: a heat-relief finder for Phoenix summers, a focus timer, a graphing calculator built from scratch. This site is a running log of that work, plus a few detours into games and hobbies.</p>
       <div class="hero-meta">
         <div class="hero-meta-item">Currently building @ <span>SkipCourse LLC</span></div>
         <div class="hero-meta-item">Based in <span>Phoenix, AZ</span></div>
@@ -555,16 +569,16 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
     <div class="page-head reveal-doodle">
       <div class="eyebrow">What I build with</div>
       <h1 class="section-title">Toolkit</h1><svg class="squiggle" viewBox="0 0 220 14"><path d="M4,8 C30,-2 50,16 78,7 C104,-1 126,15 152,6 C176,-1 196,13 216,6"/></svg>
-      <p class="section-lede">The languages, platforms, and non-technical skills I actually reach for — grouped by what they're for rather than dumped in one pile.</p>
+      <p class="section-lede">The languages, platforms, and non-technical skills I actually reach for, grouped by what they're for rather than dumped in one pile.</p>
     </div>
 
     <div class="tool-group">
       <div class="tool-group-title">Languages &amp; the web</div>
       <div class="tool-grid">
-        <div class="tool-card"><div class="tool-card-name">JavaScript</div><div class="tool-card-desc">My default for anything interactive — dynamic UI, live updates, and the logic behind every app on this site.</div></div>
-        <div class="tool-card"><div class="tool-card-name">Python</div><div class="tool-card-desc">Readable and versatile — what I reach for on backends, automation, and anything involving AI or data.</div></div>
-        <div class="tool-card"><div class="tool-card-name">HTML</div><div class="tool-card-desc">The structural foundation of every page I build — content and layout before any of the styling happens.</div></div>
-        <div class="tool-card"><div class="tool-card-name">CSS</div><div class="tool-card-desc">Layout, color, type, and responsive behavior — the difference between something that works and something that feels good to use.</div></div>
+        <div class="tool-card"><div class="tool-card-name">JavaScript</div><div class="tool-card-desc">My default for anything interactive: dynamic UI, live updates, and the logic behind every app on this site.</div></div>
+        <div class="tool-card"><div class="tool-card-name">Python</div><div class="tool-card-desc">Readable and versatile: what I reach for on backends, automation, and anything involving AI or data.</div></div>
+        <div class="tool-card"><div class="tool-card-name">HTML</div><div class="tool-card-desc">The structural foundation of every page I build: content and layout before any of the styling happens.</div></div>
+        <div class="tool-card"><div class="tool-card-name">CSS</div><div class="tool-card-desc">Layout, color, type, and responsive behavior: the difference between something that works and something that feels good to use.</div></div>
         <div class="tool-card"><div class="tool-card-name">C</div><div class="tool-card-desc">A lower-level language that taught me how computers actually manage memory and run instructions.</div></div>
       </div>
     </div>
@@ -572,7 +586,7 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
     <div class="tool-group">
       <div class="tool-group-title">Platforms &amp; infrastructure</div>
       <div class="tool-grid">
-        <div class="tool-card"><div class="tool-card-name">Firebase</div><div class="tool-card-desc">Google's platform for shipping fast — auth, hosting, and a database without standing up my own servers.</div></div>
+        <div class="tool-card"><div class="tool-card-name">Firebase</div><div class="tool-card-desc">Google's platform for shipping fast: auth, hosting, and a database without standing up my own servers.</div></div>
         <div class="tool-card"><div class="tool-card-name">Cloud Firestore</div><div class="tool-card-desc">A flexible NoSQL database I use to store and sync app data in real time across users.</div></div>
         <div class="tool-card"><div class="tool-card-name">GitHub</div><div class="tool-card-desc">Version control and hosting for every project's code, and where I collaborate with teammates.</div></div>
         <div class="tool-card"><div class="tool-card-name">Full-stack dev</div><div class="tool-card-desc">Comfortable owning both what a user sees and the servers and databases running behind it.</div></div>
@@ -582,7 +596,7 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
     <div class="tool-group">
       <div class="tool-group-title">Security &amp; AI</div>
       <div class="tool-grid">
-        <div class="tool-card"><div class="tool-card-name">Cybersecurity</div><div class="tool-card-desc">Studying how systems get attacked so I can help build ones that hold up — currently deep in GCU's GenCyber program.</div></div>
+        <div class="tool-card"><div class="tool-card-name">Cybersecurity</div><div class="tool-card-desc">Studying how systems get attacked so I can help build ones that hold up: currently deep in GCU's GenCyber program.</div></div>
         <div class="tool-card"><div class="tool-card-name">AI / ML</div><div class="tool-card-desc">Learning the fundamentals through Cisco's Networking Academy and Anthropic Academy, including how to train and deploy models.</div></div>
       </div>
     </div>
@@ -590,7 +604,7 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
     <div class="tool-group">
       <div class="tool-group-title">Leadership &amp; process</div>
       <div class="tool-grid">
-        <div class="tool-card"><div class="tool-card-name">Leadership</div><div class="tool-card-desc">Guiding a team toward a shared goal — built through committee work and running my own internship team.</div></div>
+        <div class="tool-card"><div class="tool-card-name">Leadership</div><div class="tool-card-desc">Guiding a team toward a shared goal: built through committee work and running my own internship team.</div></div>
         <div class="tool-card"><div class="tool-card-name">Public speaking</div><div class="tool-card-desc">Presenting ideas clearly and confidently, from committee updates to hackathon pitches.</div></div>
         <div class="tool-card"><div class="tool-card-name">Project management</div><div class="tool-card-desc">Organizing tasks, timelines, and people from an idea on a whiteboard to something shipped.</div></div>
       </div>
@@ -614,7 +628,7 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
           <div><div class="tl-role">Full Stack Lead System Developer</div><div class="tl-org">SkipCourse LLC · Internship</div></div>
           <div class="tl-date">May 2026 – Present · Remote</div>
         </button>
-        <div class="tl-body"><div class="tl-body-inner">Leading development on a game upload platform and an internal admin dashboard, working directly with the founding team on architecture decisions, not just implementation. This is where most of my full-stack skills get put to real use — real users, real deadlines, real bugs at 11pm.</div></div>
+        <div class="tl-body"><div class="tl-body-inner">Leading development on a game upload platform and an internal admin dashboard, working directly with the founding team on architecture decisions, not just implementation. This is where most of my full-stack skills get put to real use: real users, real deadlines, real bugs at 11pm.</div></div>
       </div>
       <div class="tl-item">
         <div class="tl-dot"></div>
@@ -630,7 +644,7 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
           <div><div class="tl-role">GCU Cybersecurity Scholar</div><div class="tl-org">Grand Canyon University · GenCyber Camp</div></div>
           <div class="tl-date">Jun 2026 – Present · Hybrid</div>
         </button>
-        <div class="tl-body"><div class="tl-body-inner">Studying ethical hacking and national security fundamentals in a program with federal backing from the NSA, NSF, and FBI — hands-on labs in network defense, not just theory.</div></div>
+        <div class="tl-body"><div class="tl-body-inner">Studying ethical hacking and national security fundamentals in a program with federal backing from the NSA, NSF, and FBI: hands-on labs in network defense, not just theory.</div></div>
       </div>
       <div class="tl-item">
         <div class="tl-dot"></div>
@@ -638,7 +652,7 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
           <div><div class="tl-role">AI &amp; ML Scholar</div><div class="tl-org">Cisco Networking Academy</div></div>
           <div class="tl-date">Jun 2026 – Present · Remote</div>
         </button>
-        <div class="tl-body"><div class="tl-body-inner">Working through the science behind artificial intelligence and machine learning — the math and mechanics underneath the tools I already use day to day.</div></div>
+        <div class="tl-body"><div class="tl-body-inner">Working through the science behind artificial intelligence and machine learning: the math and mechanics underneath the tools I already use day to day.</div></div>
       </div>
       <div class="tl-item">
         <div class="tl-dot"></div>
@@ -646,7 +660,7 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
           <div><div class="tl-role">Committee Head</div><div class="tl-org">National Junior Honor Society</div></div>
           <div class="tl-date">Sep 2025 – Present</div>
         </button>
-        <div class="tl-body"><div class="tl-body-inner">Leading a team of peers on student-driven service projects and internal outreach initiatives at BASIS Phoenix — planning, delegating, and following through.</div></div>
+        <div class="tl-body"><div class="tl-body-inner">Leading a team of peers on student-driven service projects and internal outreach initiatives at BASIS Phoenix: planning, delegating, and following through.</div></div>
       </div>
       <div class="tl-item">
         <div class="tl-dot"></div>
@@ -730,7 +744,7 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
           <div class="type-box" id="typeBox" style="display:none;">
             <div class="type-prompt" id="typePrompt"></div>
             <input class="type-input" id="typeInput" autocomplete="off" autocapitalize="off" spellcheck="false">
-            <div class="type-hint">Just start typing — the box is focused automatically.</div>
+            <div class="type-hint">Just start typing: the box is focused automatically.</div>
           </div>
           <div class="play-win" id="typeWin">
             <div class="win-title">Snippet cleared!</div>
@@ -755,10 +769,10 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
       <div class="edu-card">
         <div class="edu-title">BASIS Phoenix</div>
         <div class="edu-sub">Student &amp; NJHS Committee Head · Grade 8 · Aug 2023 – May 2030</div>
-        <div class="edu-body">Balancing a rigorous academic track with volleyball, basketball, and NJHS Committee Head duties focused on internal outreach. BASIS runs on a college-prep model, so AP coursework starts early — I took my first one in 8th grade.</div>
+        <div class="edu-body">Balancing a rigorous academic track with volleyball, basketball, and NJHS Committee Head duties focused on internal outreach. BASIS runs on a college-prep model, so AP coursework starts early: I took my first one in 8th grade.</div>
       </div>
       <div class="edu-card">
-        <div class="edu-title">Frostbyte Hackathon — 1st Place</div>
+        <div class="edu-title">Frostbyte Hackathon: 1st Place</div>
         <div class="edu-sub">Issued by The Code Hatch · Feb 2026</div>
         <div class="edu-body">Won first place building a city-scale global warming simulation platform with a four-person team in 48 hours, on top of my regular work at SkipCourse LLC. Full story is on the Work page.</div>
       </div>
@@ -796,7 +810,7 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
       <div class="trio-card">
         <div class="trio-label">On the court</div>
         <div class="trio-title">Basketball &amp; volleyball</div>
-        <div class="trio-body">Competitive athlete in both sports, which is most of why the "Currently learning" list above keeps growing at odd hours — practice first, code after.</div>
+        <div class="trio-body">Competitive athlete in both sports, which is most of why the "Currently learning" list above keeps growing at odd hours: practice first, code after.</div>
       </div>
     </div>
   </div>
@@ -834,11 +848,12 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
     <div class="contact-actions">
       <a class="contact-btn solid" href="mailto:arjunkiran4375@gmail.com">Email me</a>
       <a class="contact-btn outline" href="https://linkedin.com/in/arjun-kiran" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="contact-btn resume" href="#" id="contactResumeLink" target="_blank" rel="noopener">Resume<span class="resume-badge">Temp</span></a>
     </div>
     <div class="contact-links">
-      <a href="https://github.com/arjuns-coding" target="_blank" rel="noopener">GitHub — arjuns-coding</a>
+      <a href="https://github.com/arjuns-coding" target="_blank" rel="noopener">GitHub: arjuns-coding</a>
       <a href="mailto:arjunkiran4375@gmail.com">arjunkiran4375@gmail.com</a>
-      <span>Discord — hi.im.arjun</span>
+      <span>Discord: hi.im.arjun</span>
     </div>
   </div>
 </section>
@@ -851,7 +866,7 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
       <span class="footer-logo doodle-circle">Arjun
         <svg viewBox="0 0 120 70" aria-hidden="true"><path d="M14,35 C10,15 35,5 60,6 C90,7 112,18 110,36 C108,55 82,64 58,63 C30,62 8,54 12,37" /></svg>
       </span>
-      <p class="footer-tagline">Small, useful things built one commit at a time — out of Phoenix, AZ.</p>
+      <p class="footer-tagline">Small, useful things built one commit at a time, out of Phoenix, AZ.</p>
       <div class="footer-social">
         <a href="https://github.com/arjuns-coding" target="_blank" rel="noopener">GitHub</a>
         <a href="https://linkedin.com/in/arjun-kiran" target="_blank" rel="noopener">LinkedIn</a>
@@ -880,7 +895,7 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
       <div class="footer-col-title">Say hi</div>
       <ul>
         <li><a href="mailto:arjunkiran4375@gmail.com">arjunkiran4375@gmail.com</a></li>
-        <li><span>Discord — hi.im.arjun</span></li>
+        <li><span>Discord: hi.im.arjun</span></li>
       </ul>
     </div>
   </div>
@@ -888,8 +903,8 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
   <svg class="wavy-divider" viewBox="0 0 1200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M0,10 C50,2 100,18 150,10 C200,2 250,18 300,10 C350,2 400,18 450,10 C500,2 550,18 600,10 C650,2 700,18 750,10 C800,2 850,18 900,10 C950,2 1000,18 1050,10 C1100,2 1150,18 1200,10"/></svg>
 
   <div class="wrap footer-bottom">
-    <span>&copy; <span id="footYear"></span> Arjun Kiran &middot; Phoenix, AZ &middot; updated 9/9/2026</span>
-    <span class="hand-note footer-signoff">Doodled with lots of love and way too much coffee ✎</span>
+    <span>&copy; <span id="footYear"></span> Arjun Kiran &middot; Phoenix, AZ</span>
+    <span class="hand-note footer-signoff">Doodled with way too much coffee ✎</span>
     <button class="to-top-btn" id="toTopBtn" type="button" aria-label="Back to top">
       <svg viewBox="0 0 24 24" width="14" height="14" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Back to top
@@ -900,7 +915,6 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
 <button class="cookie-fab" id="cookieFab" aria-label="Open the cookie jar">🍪</button>
 <div class="cookie-nudge hand-note" id="cookieNudge">psst, click me!</div>
 <div class="cookie-panel" id="cookiePanel">
-  <div class="jar" id="cookieJarEmoji">Fortunes</div>
   <div class="jar" id="cookieJarEmoji">🍪</div>
   <div class="fortune" id="cookieFortune"></div>
   <div class="cookie-btns">
@@ -911,6 +925,13 @@ svg.doodle-defs{ position:absolute; width:0; height:0; overflow:hidden; }
 
 <script>
 document.getElementById('footYear').textContent = new Date().getFullYear();
+
+/* ================= temporary resume link =================
+   Replace RESUME_URL below with a real hosted PDF link when ready
+   (e.g. a Google Drive share link or a file in this same folder). */
+const RESUME_URL = 'resume.pdf';
+document.getElementById('navResumeLink').href = RESUME_URL;
+document.getElementById('contactResumeLink').href = RESUME_URL;
 
 /* ================= custom trackpad-style cursor ================= */
 (function(){
@@ -936,6 +957,52 @@ document.getElementById('footYear').textContent = new Date().getFullYear();
   document.addEventListener('mouseout', (e) => { if(e.target.closest(HOVER_SELECTOR)) cursor.classList.remove('hover'); });
   document.addEventListener('mousedown', () => cursor.classList.add('down'));
   document.addEventListener('mouseup', () => cursor.classList.remove('down'));
+})();
+
+/* ================= cute magnetic hover (jerrychendesigns-style pull) ================= */
+(function(){
+  if(!window.matchMedia('(pointer: fine) and (hover: hover)').matches) return;
+  const MAG_SELECTOR = '.coin-btn, .nav-cta, .nav-resume, .contact-btn, .proj-link-btn, .cookie-fab, .to-top-btn, .game-tab';
+  document.querySelectorAll(MAG_SELECTOR).forEach(el => el.classList.add('magnetic'));
+
+  document.addEventListener('mousemove', (e) => {
+    const el = e.target.closest(MAG_SELECTOR);
+    document.querySelectorAll(MAG_SELECTOR + '.is-pulled').forEach(other => {
+      if(other !== el){ other.style.transform = ''; other.classList.remove('is-pulled'); }
+    });
+    if(!el) return;
+    const rect = el.getBoundingClientRect();
+    const relX = (e.clientX - (rect.left + rect.width/2)) * 0.28;
+    const relY = (e.clientY - (rect.top + rect.height/2)) * 0.28;
+    el.classList.add('is-pulled');
+    el.style.transform = `translate(${relX}px, ${relY}px)`;
+  });
+  document.addEventListener('mouseout', (e) => {
+    const el = e.target.closest(MAG_SELECTOR);
+    if(el && !e.relatedTarget?.closest?.(MAG_SELECTOR)){ el.style.transform = ''; el.classList.remove('is-pulled'); }
+  });
+
+  /* tiny sparkle burst on hover-in, for extra cuteness */
+  const SPARKLE_SELECTOR = '.coin-btn, .nav-cta, .nav-resume, .contact-btn, .proj-link-btn, .work-row, .crew-card, .edu-card, .trio-card, .cookie-fab';
+  const bits = ['✨','⭐','💫'];
+  document.addEventListener('mouseover', (e) => {
+    const el = e.target.closest(SPARKLE_SELECTOR);
+    if(!el || el.dataset.sparkled) return;
+    el.dataset.sparkled = '1';
+    setTimeout(() => { delete el.dataset.sparkled; }, 500);
+    const rect = el.getBoundingClientRect();
+    for(let i=0;i<2;i++){
+      const s = document.createElement('span');
+      s.className = 'sparkle-trail';
+      s.textContent = bits[Math.floor(Math.random()*bits.length)];
+      s.style.left = (rect.left + Math.random()*rect.width) + 'px';
+      s.style.top = (rect.top + Math.random()*rect.height) + 'px';
+      s.style.setProperty('--sx', (Math.random()*30-15) + 'px');
+      s.style.setProperty('--sy', (-20 - Math.random()*20) + 'px');
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 700);
+    }
+  });
 })();
 
 const toTopBtn = document.getElementById('toTopBtn');
@@ -1056,10 +1123,10 @@ const PROJECTS = {
     tags:['JavaScript','Web dev'],
     role:'Solo build', status:'Live',
     url:'https://fluidide.vercel.app',
-    problem:"Most code editors pile on menus, panels, and popups before you've even written a line — and that clutter adds real mental overhead when you're trying to stay in flow.",
+    problem:"Most code editors pile on menus, panels, and popups before you've even written a line, and that clutter adds real mental overhead when you're trying to stay in flow.",
     build:[
-      "So I built FluidIDE — an editor where every panel, transition, and keyboard shortcut is designed to stay out of your way. No popups you didn't ask for, no settings screen you need a tutorial for.",
-      "It's still evolving, but the core editing experience — syntax highlighting, file switching, and layout — is solid enough that I use it for my own side projects."
+      "So I built FluidIDE: an editor where every panel, transition, and keyboard shortcut is designed to stay out of your way. No popups you didn't ask for, no settings screen you need a tutorial for.",
+      "It's still evolving, but the core editing experience: syntax highlighting, file switching, and layout, is solid enough that I use it for my own side projects."
     ]
   },
   azheat:{
@@ -1067,10 +1134,10 @@ const PROJECTS = {
     tags:['Full-stack','Maps'],
     role:'Solo build', status:'Live',
     url:'https://heatreliefaz.vercel.app',
-    problem:"Phoenix summers push past 110°F for weeks at a time, and the people who need a cooling center or a water station most — outdoor workers, people without stable housing, anyone without reliable AC — are usually the ones with the least time to go hunting for one.",
+    problem:"Phoenix summers push past 110°F for weeks at a time, and the people who need a cooling center or a water station most, outdoor workers, people without stable housing, anyone without reliable AC, are usually the ones with the least time to go hunting for one.",
     build:[
       "AZ Heat Relief pulls together public cooling-center data and lets you search by location, so the nearest place to cool down or refill a bottle is never more than a few taps away.",
-      "It's a small tool, but it's the project I'm most proud of — built to help someone through a rough day rather than to impress anyone."
+      "It's a small tool, but it's the project I'm most proud of, built to help someone through a rough day rather than to impress anyone."
     ]
   },
   lockin:{
@@ -1078,9 +1145,9 @@ const PROJECTS = {
     tags:['JavaScript'],
     role:'Solo build', status:'Live',
     url:'https://lockin-arjun.vercel.app',
-    problem:"Most focus timers I tried were doing too much — streaks, leaderboards, social features, upsells — and ended up being one more thing competing for my attention instead of protecting it.",
+    problem:"Most focus timers I tried were doing too much: streaks, leaderboards, social features, upsells, and ended up being one more thing competing for my attention instead of protecting it.",
     build:[
-      "Lock In does exactly one thing: pick a length, press play, and settle into a quiet corner for deep focus — no accounts to make, no streaks to maintain, no clutter in the way."
+      "Lock In does exactly one thing: pick a length, press play, and settle into a quiet corner for deep focus. No accounts to make, no streaks to maintain, no clutter in the way."
     ]
   },
   fieldweather:{
@@ -1099,20 +1166,20 @@ const PROJECTS = {
     tags:['JavaScript'],
     role:'Solo build', status:'Live',
     url:'https://apexgraphing.vercel.app',
-    problem:"Free graphing calculators exist, but most either cost money, look dated, or hide the interesting part — how a raw expression like \"y = sin(x) * x^2\" turns into something a computer can actually draw.",
+    problem:"Free graphing calculators exist, but most either cost money, look dated, or hide the interesting part: how a raw expression like \"y = sin(x) * x^2\" turns into something a computer can actually draw.",
     build:[
-      "Apex is Desmos, but built by me — and, I'd argue, a little more aesthetically pleasing. It parses a raw string, handles order of operations and implicit multiplication, and turns the result into something a canvas can draw in real time.",
-      "Getting the parser right — including edge cases like undefined values — taught me more about how interpreters work than any class could have."
+      "Apex is Desmos, but built by me, and, I'd argue, a little more aesthetically pleasing. It parses a raw string, handles order of operations and implicit multiplication, and turns the result into something a canvas can draw in real time.",
+      "Getting the parser right, including edge cases like undefined values, taught me more about how interpreters work than any class could have."
     ]
   },
   globalwarming:{
     meta:'Feb 2026 · Frostbyte Hackathon', title:'Global Warming City Simulator', glyph:'GW', live:false, award:true, cover:COVERS.globalwarming,
     tags:['Python','Hackathon','1st place'],
-    role:'Team of 4', status:'Hackathon build — Feb 2026',
+    role:'Team of 4', status:'Hackathon build: Feb 2026',
     url:'',
-    problem:"In 48 hours, our team wanted to show — not just tell — how rising temperatures ripple through a city's infrastructure, energy grid, and daily life, instead of presenting it as one more abstract chart.",
+    problem:"In 48 hours, our team wanted to show, not just tell, how rising temperatures ripple through a city's infrastructure, energy grid, and daily life, instead of presenting it as one more abstract chart.",
     build:[
-      "Built with a four-person team at the Frostbyte Hackathon, this is a city-scale simulation modeling how rising temperatures affect infrastructure, energy use, and quality of life over time. My role was mostly the simulation logic in Python — the rules that decide how a city's systems respond as the temperature climbs — while my teammates handled the interface and data visualization.",
+      "Built with a four-person team at the Frostbyte Hackathon, this is a city-scale simulation modeling how rising temperatures affect infrastructure, energy use, and quality of life over time. My role was mostly the simulation logic in Python, the rules that decide how a city's systems respond as the temperature climbs, while my teammates handled the interface and data visualization.",
       "We took first place, which was the first hackathon win for all four of us."
     ]
   }
@@ -1242,7 +1309,6 @@ document.querySelectorAll('[data-nav]').forEach(el => {
   el.addEventListener('click', (e) => {
     e.preventDefault();
     showPage(el.getAttribute('data-nav'));
-    closeMoreMenu();
   });
 });
 
@@ -1262,13 +1328,6 @@ window.addEventListener('popstate', (e) => {
     updateNavActive('home');
   }
 })();
-
-/* more dropdown */
-const moreBtn = document.getElementById('moreBtn');
-const moreMenu = document.getElementById('moreMenu');
-moreBtn.addEventListener('click', (e) => { e.stopPropagation(); moreMenu.classList.toggle('open'); });
-function closeMoreMenu(){ moreMenu.classList.remove('open'); }
-document.addEventListener('click', (e) => { if(!moreMenu.contains(e.target) && e.target !== moreBtn) closeMoreMenu(); });
 
 /* ================= toolkit / experience interactions ================= */
 document.querySelectorAll('.tl-item').forEach(item => {
